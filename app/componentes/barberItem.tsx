@@ -1,3 +1,4 @@
+"use client";
 import type { Barbershop } from "@/generated/prisma/client";
 import Image from "next/image";
 
@@ -7,7 +8,12 @@ interface SectionProps {
 
 const BarberItem = ({ barbershop }: SectionProps) => {
   return (
-    <div className="relative min-h-[200px] min-w-[290px] rounded-xl">
+    <div
+      className="relative min-h-[200px] min-w-[290px] rounded-xl"
+      onClick={() => {
+        window.location.href = `/pedidos/${barbershop.id}`;
+      }}
+    >
       <div className="absolute top-0 right-0 w-full h-full bg-linear-to-t  from-black to-transparent"></div>
       <Image
         src={barbershop.imageUrl}

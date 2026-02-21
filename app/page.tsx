@@ -5,6 +5,7 @@ import Header from "./componentes/header";
 import Pesquisa from "./componentes/Pesquisa";
 import Image from "next/image";
 import BarberItem from "./componentes/barberItem";
+import Footer from "./componentes/footer";
 
 const prisma = new PrismaClient({
   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),
@@ -23,34 +24,37 @@ export default async function Home() {
     orderBy: { name: "asc" },
   });
   return (
-    <div className="px-3 py-4  flex  flex-col gap-4">
-      <Header />
-      <Pesquisa />
-      <div className="flex flex-row justify-between gap-2 items-center overflow-x-auto [&::-webkit-scrollbar]:hidden ">
-        {services.map((service) => (
-          <Categoria key={service.name} name={service.name} />
-        ))}
+    <div>
+      <div className="px-3 py-4  flex  flex-col gap-4">
+        <Header />
+        <Pesquisa />
+        <div className="flex flex-row justify-between gap-2 items-center overflow-x-auto [&::-webkit-scrollbar]:hidden ">
+          {services.map((service) => (
+            <Categoria key={service.name} name={service.name} />
+          ))}
+        </div>
+        <Image
+          src="/banner.png"
+          alt="barbershop"
+          width={0}
+          height={0}
+          sizes="100vw"
+          className="h-auto w-[365]"
+        />
+        <h1 className="font-bold">Recomendados</h1>
+        <div className="flex flex-row justify-between gap-2 items-center overflow-x-auto [&::-webkit-scrollbar]:hidden ">
+          {recomendados.map((barbershop) => (
+            <BarberItem key={barbershop.id} barbershop={barbershop} />
+          ))}
+        </div>
+        <h1 className="font-bold">Populares</h1>
+        <div className="flex flex-row justify-between gap-2 items-center overflow-x-auto [&::-webkit-scrollbar]:hidden ">
+          {populares.map((barbershop) => (
+            <BarberItem key={barbershop.id} barbershop={barbershop} />
+          ))}
+        </div>
       </div>
-      <Image
-        src="/banner.png"
-        alt="barbershop"
-        width={0}
-        height={0}
-        sizes="100vw"
-        className="h-auto w-[365]"
-      />
-      <h1 className="font-bold">Recomendados</h1>
-      <div className="flex flex-row justify-between gap-2 items-center overflow-x-auto [&::-webkit-scrollbar]:hidden ">
-        {recomendados.map((barbershop) => (
-          <BarberItem key={barbershop.id} barbershop={barbershop} />
-        ))}
-      </div>
-      <h1 className="font-bold">Populares</h1>
-      <div className="flex flex-row justify-between gap-2 items-center overflow-x-auto [&::-webkit-scrollbar]:hidden ">
-        {populares.map((barbershop) => (
-          <BarberItem key={barbershop.id} barbershop={barbershop} />
-        ))}
-      </div>
+      <Footer />
     </div>
   );
 }
